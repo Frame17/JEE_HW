@@ -1,9 +1,22 @@
-plugins {
-    id 'org.springframework.boot' version "2.1.5.RELEASE"
-    id 'io.spring.dependency-management' version "1.0.7.RELEASE"
-    id "org.jetbrains.kotlin.plugin.spring" version "1.3.31"
-    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.50"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:1.3.50"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:1.3.50"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE"
+    }
 }
+
+apply plugin: 'kotlin'
+apply plugin: "kotlin-spring"
+apply plugin: "kotlin-jpa"
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group 'frame_17'
 version '1.0-SNAPSHOT'
@@ -19,11 +32,14 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.50"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.50"
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('com.h2database:h2')
 }
 
 compileKotlin {
