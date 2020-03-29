@@ -15,4 +15,8 @@ class BookService @Autowired constructor(private val bookRepository: BookReposit
     fun allBooks(): MutableIterable<BookEntity> = bookRepository.findAll()
 
     fun bookById(id: Int) = bookRepository.findByIdOrNull(id) ?: BookEntity("N/A", "N/A", "N/A")
+
+    fun bookByISBN(isbn: String) = bookRepository.findBookByIsbn(isbn) ?: BookEntity("N/A", "N/A", "N/A")
+
+    fun bookByTitle(title: String) = bookRepository.findBookByTitle(title) ?: BookEntity("N/A", "N/A", "N/A")
 }

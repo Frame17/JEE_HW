@@ -8,4 +8,8 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 @Transactional
 interface BookRepository: CrudRepository<BookEntity, Int> {
+
+    fun findBookByIsbn(isbn: String): BookEntity?
+
+    fun findBookByTitle(title: String): BookEntity?
 }

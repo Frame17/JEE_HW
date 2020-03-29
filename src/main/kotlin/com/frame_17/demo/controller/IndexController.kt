@@ -34,4 +34,16 @@ class IndexController(private val bookService: BookService) {
         model.addAttribute("book", bookService.bookById(id))
         return "book"
     }
+
+    @GetMapping(path = ["/book/isbn/{isbn}"])
+    fun bookISBN(model: Model, @PathVariable("isbn") isbn: String): String {
+        model.addAttribute("book", bookService.bookByISBN(isbn))
+        return "book"
+    }
+
+    @GetMapping(path = ["/book/title/{title}"])
+    fun bookTitle(model: Model, @PathVariable("title") title: String): String {
+        model.addAttribute("book", bookService.bookByTitle(title))
+        return "book"
+    }
 }
