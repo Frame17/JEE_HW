@@ -1,23 +1,120 @@
-<!DOCTYPE html>​
-<html xmlns:th="http://www.thymeleaf.org">​
-<head>​
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Index</title>​
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
 </head>
-<body>​
-<table>​
-    <thead>​
-    <th>name</th>
-    <th>isbn</th>
-    <th>author</th>
-    </thead>
-    <tbody>​
-    <tr th:each="book: ${books}">​
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.isbn}"></td>
-        <td th:text="${book.author}"></td>
+<body>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">title</th>
+        <th scope="col">isbn</th>
+        <th scope="col">author</th>
     </tr>
+    </thead>
+    <tbody id="books-container">
+
     </tbody>
 </table>
+<hr>
+<form>
+    <input type="text" name="title" id="add-title" placeholder="title">
+    <input type="text" name="isbn" id="add-isbn" placeholder="isbn">
+    <input type="text" name="author" id="add-author" placeholder="author">
+    <button id="add">Add Book</button>
+</form>
+</div>
+<form>
+    <input type="text" required class="form-control" id="inputId" placeholder="isbn">
+    <button id="search">Search</button>
+</form>
+
+<div id="search-container">
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
+<script>
+    $(function () {
+
+    function getAll() {
+        let booksContainer = $('#books-container');
+        booksContainer.empty().hide();
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/books',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, status, xhr) {
+                console.log('success');
+                console.log(data);
+
+                data.forEach(function (item) {
+                    booksContainer.append('<tr>\n' +
+                        '      <th scope="row">' + item['id'] + '</th>\n' +
+                        '      <td>' + item['title'] + '</td>\n' +
+                        '      <td>' + item['isbn'] + '</td>\n' +
+                        '      <td>' + item['author'] + '</td>\n' +
+                        '    </tr>')
+                });
+            },
+            error: function (result, status, xhr) {
+                console.log('error');
+            }
+        });
+        booksContainer.hide().slideDown()
+    }
+
+    var searchContainer = $('#search-container');
+
+    $('#search').click(function (e) {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/book/isbn/' + $('#inputId').val(),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, status, xhr) {
+                console.log('success search');
+                let res = 'Title: ' + data['title'] +
+                    ' isbn: ' + data['isbn'] +
+                    ' author: ' + data['author'];
+                searchContainer.empty().append(res);
+            },
+            error: function (result, status, xhr) {
+                console.log('error')
+            }
+        });
+        return false;
+    });
+
+    $('#add').click(function (e) {
+
+        let sendData = {'title': $('#add-title').val(), 'isbn': $('#add-isbn').val(), 'author': $('#add-author').val()};
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/add-book',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(sendData),
+            success: function () {
+                console.log('success');
+                getAll()
+            },
+            error: function () {
+                getAll()
+            }
+        });
+
+        return false;
+    });
+});
+
+</script>
+
 </body>
-</html>​
+</html>
