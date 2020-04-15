@@ -1,6 +1,6 @@
 package com.frame_17.demo.repository
 
-import com.frame_17.demo.model.UserEntity
+import com.frame_17.demo.repository.entity.UserEntity
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
@@ -13,4 +13,6 @@ interface UserRepository : CrudRepository<UserEntity, Int> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.lastName LIKE %?1% OR u.firstName LIKE %?1%")
     fun findBySubSequence(subSequence: String) : List<UserEntity>
+
+    fun findByUsername(username: String): UserEntity?
 }

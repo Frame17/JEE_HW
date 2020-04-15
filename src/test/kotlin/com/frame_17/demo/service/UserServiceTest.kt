@@ -1,6 +1,6 @@
 package com.frame_17.demo.service
 
-import com.frame_17.demo.model.UserEntity
+import com.frame_17.demo.repository.entity.UserEntity
 import com.frame_17.demo.repository.UserRepository
 import org.junit.After
 import org.junit.Before
@@ -15,7 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner
 class UserServiceTest {
 
     companion object {
-        private val USERS = listOf(UserEntity("Sub", "Zero"), UserEntity("Super", "Man"), UserEntity("Bruce", "Wayne"), UserEntity("Tomas", "Wayne"))
+        private val USERS = listOf(
+            UserEntity("Sub", "Zero"),
+            UserEntity("Super", "Man"),
+            UserEntity("Bruce", "Wayne"),
+            UserEntity("Tomas", "Wayne")
+        )
     }
 
     @Autowired

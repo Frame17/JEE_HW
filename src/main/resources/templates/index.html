@@ -33,6 +33,15 @@
 <div id="search-container">
 
 </div>
+<hr>
+<form>
+    <input type="text" required class="form-control" id="favoritesInput" placeholder="isbn">
+    <button id="favorites">Add to favorites</button>
+</form>
+<p>Favorites</p>
+<div id="favorites-container">
+
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -93,6 +102,27 @@
     });
 
     $('#add').click(function (e) {
+
+        let sendData = {'title': $('#add-title').val(), 'isbn': $('#add-isbn').val(), 'author': $('#add-author').val()};
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/add-book',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(sendData),
+            success: function () {
+                console.log('success');
+                getAll()
+            },
+            error: function () {
+                getAll()
+            }
+        });
+
+        return false;
+    });
+
+    $('#favorites').click(function (e) {
 
         let sendData = {'title': $('#add-title').val(), 'isbn': $('#add-isbn').val(), 'author': $('#add-author').val()};
         $.ajax({

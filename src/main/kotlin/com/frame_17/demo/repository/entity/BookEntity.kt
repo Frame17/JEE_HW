@@ -1,4 +1,4 @@
-package com.frame_17.demo.model
+package com.frame_17.demo.repository.entity
 
 import javax.persistence.*
 
@@ -10,5 +10,8 @@ data class BookEntity(
     @Column(name = "isbn") val isbn: String,
     @Column(name = "author") val author: String
 ) {
+//    @ManyToMany
+//    lateinit var users: UserEntity
+
     constructor(title: String, isbn: String, author: String) : this(null, title, isbn, author)
 }
