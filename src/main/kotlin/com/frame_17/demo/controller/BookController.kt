@@ -3,11 +3,12 @@ package com.frame_17.demo.controller
 import com.frame_17.demo.controller.model.Book
 import com.frame_17.demo.service.BookService
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 class BookController(private val bookService: BookService) {
     @PostMapping("/add-book")
-    fun addBook(@RequestBody book: Book) =
+    fun addBook(@Valid @RequestBody book: Book) =
         book.run {
             bookService.save(title, isbn, author)
         }

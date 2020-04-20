@@ -22,7 +22,7 @@ class WebSecurityConfig @Autowired constructor(private val userRepository: UserR
             .csrf().disable()
             .cors().and()
             .authorizeRequests()
-            .antMatchers("/register", "/add-book", "/books", "/book/isbn/**").permitAll()
+            .antMatchers("/", "/register", "/add-book", "/books", "/book/isbn/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
